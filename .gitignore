@@ -1,0 +1,7 @@
+# .gitignore files
+
+# ignore node_modules
+/node_modules
+
+# ignore environment variables
+.env
