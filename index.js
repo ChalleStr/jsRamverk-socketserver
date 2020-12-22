@@ -13,7 +13,7 @@ const io = require('socket.io')(server, {
     }
 });
 
-io.origins(["https://charlottestrand.me:443"])
+//io.origins(["https://charlottestrand.me:443"]);
 
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 
