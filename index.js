@@ -13,17 +13,21 @@ const server = require("http").createServer(app);
 //     }
 // });
 
-const io = require("socket.io")(server, {
-  handlePreflightRequest: (req, res) => {
-    const headers = {
-      "Access-Control-Allow-Headers": "Content-Type, Authorization",
-      "Access-Control-Allow-Origin": "https://charlottestrand.me:443",
-      "Access-Control-Allow-Credentials": true,
-    };
-    res.writeHead(200, headers);
-    res.end();
-  },
-})
+// const io = require("socket.io")(server, {
+//   handlePreflightRequest: (req, res) => {
+//     const headers = {
+//       "Access-Control-Allow-Headers": "Content-Type, Authorization",
+//       "Access-Control-Allow-Origin": "https://charlottestrand.me:443",
+//       "Access-Control-Allow-Credentials": true,
+//     };
+//     res.writeHead(200, headers);
+//     res.end();
+//   },
+// })
+
+const io = require("socket.io")(server);
+
+io.origins("https://charlottestrand.me");
 
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 
