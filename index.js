@@ -27,7 +27,7 @@ const server = require("http").createServer(app);
 
 const io = require("socket.io")(server);
 
-io.origins("https://charlottestrand.me");
+io.origins(["https://charlottestrand.me"]);
 
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 
