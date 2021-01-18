@@ -37,6 +37,31 @@ app.use((req, res, next) => {
     next();
 });
 
+
+app.use("/", router);
+
+app.use((req, res, next) => {
+    var err = new Error("Not Found");
+    err.status = 404;
+    next(err);
+});
+
+app.use((req, res, next) => {
+    if (res.headersSent) {
+        return next(err);
+    }
+
+    res.status(err.status || 500).json({
+        "errors": [
+            {
+                "status": err.status,
+                "title": err.message,
+                "detail": err.message
+            }
+        ]
+    });
+});
+
 io.on('connect', (socket) => {
   socket.on('join', ({ name, room }, callback) => {
     const { error, user } = addUser({ id: socket.id, name, room });
@@ -71,4 +96,5 @@ io.on('connect', (socket) => {
   })
 });
 
-server.listen(process.env.PORT || 8300, () => console.log(`Server listens at 8300.`));
+//server.listen(process.env.PORT || 8300, () => console.log(`Server listens at 8300.`));
+server.listen(8300);
