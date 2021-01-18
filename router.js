@@ -5,7 +5,7 @@ const router = express.Router();
 //   res.send({ response: "Server is up and running." }).status(200);
 // });
 
-router.get("/", (req, res) => {
+router.get("/", (req, res, next) => {
     const data = {
         data: {
             msg: "Socket API"

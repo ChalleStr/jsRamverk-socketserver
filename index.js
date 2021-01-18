@@ -27,6 +27,11 @@ const router = require('./router');
 app.use(cors());
 app.use(router);
 
+// Middleware
+app.use((req, res, next) => {
+    next();
+});
+
 io.on('connect', (socket) => {
   socket.on('join', ({ name, room }, callback) => {
     const { error, user } = addUser({ id: socket.id, name, room });
