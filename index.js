@@ -17,7 +17,12 @@ const server = require("http").createServer(app);
 // });
 
 const io = require("socket.io")(server, {
-    origins: ["https://charlottestrand.me"]
+    cors: {
+        origin: "https://charlottestrand.me",
+        methods: ["GET", "POST"],
+        allowedHeaders: "Access-Control-Allow-Origin",
+        credentials: true
+    }
 });
 
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
