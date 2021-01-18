@@ -2,38 +2,23 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const server = require("http").createServer(app);
-const io = require('socket.io')(server, {
-    cors: {
-        //origin: "http://localhost:3000",
-        origin: "https://charlottestrand.me:443",
-        methods: ["GET", "POST"],
-        credentials: true,
-        //allowedHeaders: {"Access-Control-Allow-Origin": "http://localhost:3000"}
-        allowedHeaders: {"Access-Control-Allow-Origin": "https://charlottestrand.me:443"}
-    }
-});
-
-// const io = require("socket.io")(server, {
-//   handlePreflightRequest: (req, res) => {
-//     const headers = {
-//       "Access-Control-Allow-Headers": "Content-Type, Authorization",
-//       "Access-Control-Allow-Origin": "https://charlottestrand.me:443",
-//       "Access-Control-Allow-Credentials": true,
-//     };
-//     res.writeHead(200, headers);
-//     res.end();
-//   },
-// })
-
-// const io = require("socket.io")(server, {
+/**
+ * NEDAN FUNGERAR LOKALT!
+ */
+// const io = require('socket.io')(server, {
 //     cors: {
-//         origin: "https://charlottestrand.me",
+//         //origin: "http://localhost:3000",
+//         origin: "https://charlottestrand.me:443",
 //         methods: ["GET", "POST"],
-//         allowedHeaders:
+//         credentials: true,
+//         //allowedHeaders: {"Access-Control-Allow-Origin": "http://localhost:3000"}
+//         allowedHeaders: {"Access-Control-Allow-Origin": "https://charlottestrand.me:443"}
 //     }
 // });
 
-//io.origins(["https://charlottestrand.me:443"]);
+const io = require("socket.io")(server, {
+    origins: ["https://charlottestrand.me"]
+});
 
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 
@@ -76,4 +61,4 @@ io.on('connect', (socket) => {
   })
 });
 
-server.listen(process.env.PORT || 3001, () => console.log(`Server has started.`));
+server.listen(process.env.PORT || 8300, () => console.log(`Server listens at 8300.`));
