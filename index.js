@@ -16,22 +16,22 @@ const server = require("http").createServer(app);
 //     }
 // });
 
-// const io = require("socket.io")(server, {
-//     cors: {
-//         origin: "https://charlottestrand.me",
-//         methods: ["GET", "POST"],
-//         allowedHeaders: ["Access-Control-Allow-Origin"],
-//         credentials: true
-//     }
-// });
+const io = require("socket.io")(server, {
+    cors: {
+        origin: "https://charlottestrand.me:3000",
+        methods: ["GET", "POST"],
+        allowedHeaders: ["Access-Control-Allow-Origin"],
+        credentials: true
+    }
+});
 
-const io = require("socket.io")(server);
+
 
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 
 const router = require('./router');
 
-io.origins(["https://charlottestrand.me:443"]);
+
 
 app.use(cors());
 //app.use(router);
