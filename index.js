@@ -16,54 +16,42 @@ const server = require("http").createServer(app);
 //     }
 // });
 
-const io = require("socket.io")(server, {
-    cors: {
-        origin: "https://charlottestrand.me",
-        methods: ["GET", "POST"],
-        allowedHeaders: ["Access-Control-Allow-Origin"],
-        credentials: true
-    }
-});
+// const io = require("socket.io")(server, {
+//     cors: {
+//         origin: "https://charlottestrand.me",
+//         methods: ["GET", "POST"],
+//         allowedHeaders: ["Access-Control-Allow-Origin"],
+//         credentials: true
+//     }
+// });
 
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 
 const router = require('./router');
 
+io.origins(["https://charlottestrand.me:443"]);
+
 app.use(cors());
-app.use(router);
+//app.use(router);
 
-// Middleware
-app.use((req, res, next) => {
-    next();
-});
-
-
-app.use("/", router);
-
-app.use((req, res, next) => {
-    var err = new Error("Not Found");
-    err.status = 404;
-    next(err);
-});
-
-app.use((req, res, next) => {
-    if (res.headersSent) {
-        return next(err);
-    }
-
-    res.status(err.status || 500).json({
-        "errors": [
-            {
-                "status": err.status,
-                "title": err.message,
-                "detail": err.message
+app.get("/", (req, res) => {
+    try {
+        const data = {
+            data: {
+                msg: "Socket API"
             }
-        ]
-    });
+        };
+        console.log(data);
+        res.json(data);
+    } catch (err) {
+        console.log(err);
+        res.json(err);
+    }
 });
 
 io.on('connect', (socket) => {
-  socket.on('join', ({ name, room }, callback) => {
+    console.log("connected");
+    socket.on('join', ({ name, room }, callback) => {
     const { error, user } = addUser({ id: socket.id, name, room });
 
     if(error) return callback(error);
@@ -76,9 +64,9 @@ io.on('connect', (socket) => {
     io.to(user.room).emit('roomData', { room: user.room, users: getUsersInRoom(user.room) });
 
     callback();
-  });
+    });
 
-  socket.on('sendMessage', (message, callback) => {
+    socket.on('sendMessage', (message, callback) => {
     const user = getUser(socket.id);
 
     io.to(user.room).emit('message', { user: user.name, text: message });
@@ -97,4 +85,6 @@ io.on('connect', (socket) => {
 });
 
 //server.listen(process.env.PORT || 8300, () => console.log(`Server listens at 8300.`));
-server.listen(8300);
+server.listen(8300, () => {
+    console.log("Server listening on 8300");
+});
