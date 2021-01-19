@@ -1,6 +1,7 @@
 const express = require('express');
-const app = express();
 const cors = require('cors');
+const app = express();
+
 app.use(cors());
 const server = require("http").createServer(app);
 const router = require('./router');
@@ -36,19 +37,8 @@ const io = require("socket.io")(server, {
 //app.use(cors());
 //app.use(router);
 
-app.get("/", (req, res) => {
-    try {
-        const data = {
-            data: {
-                msg: "Socket API"
-            }
-        };
-        console.log(data);
-        res.json(data);
-    } catch (err) {
-        console.log(err);
-        res.json(err);
-    }
+app.get("/", (req, res, next) => {
+    res.json({msg: "This is CORS-enabled for all origins."})
 });
 
 io.on('connect', (socket) => {
