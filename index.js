@@ -3,10 +3,9 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 const server = require("http").createServer(app);
-const options = {
-    cors: true,
-    origins: ["https://charlottestrand.me"]
-}
+const router = require('./router');
+const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
+
 /**
  * NEDAN FUNGERAR LOKALT!
  */
@@ -21,22 +20,16 @@ const options = {
 //     }
 // });
 
-// const io = require("socket.io")(server, {
-//     cors: {
-//         origin: "https://charlottestrand.me",
-//         methods: ["GET", "POST"],
-//         allowedHeaders: {"Access-Control-Allow-Origin": "https://charlottestrand.me:3000"},
-//         credentials: true
-//     }
-// });
-
-const io = require("socket.io")(server, options);
+const io = require("socket.io")(server, {
+    cors: {
+        origin: "https://charlottestrand.me",
+        methods: ["GET", "POST"],
+        allowedHeaders: ["Content-Type", "authorization"],
+        credentials: true
+    }
+});
 
 
-
-const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
-
-const router = require('./router');
 
 
 
