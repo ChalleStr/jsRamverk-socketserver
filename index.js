@@ -30,7 +30,7 @@ const io = require("socket.io")(server, {
     }
 });
 
-const time = new Int.DateTimeFormat("sv", {
+const time = new Intl.DateTimeFormat("sv", {
     timeStyle: "short",
     timeZone: "Europe/Stockholm",
 });
