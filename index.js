@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+app.use(cors());
 const server = require("http").createServer(app);
 const options = {
     cors: true,
@@ -39,7 +40,7 @@ const router = require('./router');
 
 
 
-app.use(cors());
+//app.use(cors());
 //app.use(router);
 
 app.get("/", (req, res) => {
