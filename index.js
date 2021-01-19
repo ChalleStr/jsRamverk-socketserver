@@ -24,7 +24,7 @@ const io = require("socket.io")(server, {
     cors: {
         origin: "https://charlottestrand.me",
         methods: ["GET", "POST"],
-        allowedHeaders: ["Content-Type", "authorization"],
+        allowedHeaders: ["Content-Type", "authorization", "Access-Control-Allow-Origin"],
         credentials: true
     }
 });
