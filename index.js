@@ -20,7 +20,7 @@ const io = require("socket.io")(server, {
     cors: {
         origin: "https://charlottestrand.me:3000",
         methods: ["GET", "POST"],
-        allowedHeaders: ["Access-Control-Allow-Origin"],
+        allowedHeaders: {"Access-Control-Allow-Origin": "https://charlottestrand.me:3000"},
         credentials: true
     }
 });
