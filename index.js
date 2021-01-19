@@ -30,6 +30,10 @@ const io = require("socket.io")(server, {
     }
 });
 
+const time = new Int.DateTimeFormat("sv", {
+    timeStyle: "short",
+    timeZone: "Europe/Stockholm",
+});
 
 
 
@@ -43,6 +47,7 @@ app.get("/", (req, res, next) => {
 
 io.on('connect', (socket) => {
     console.log("connected");
+    const timeStamp = `${time.format(Date.now())}`;
     socket.on('join', ({ name, room }, callback) => {
     const { error, user } = addUser({ id: socket.id, name, room });
 
@@ -61,7 +66,7 @@ io.on('connect', (socket) => {
     socket.on('sendMessage', (message, callback) => {
     const user = getUser(socket.id);
 
-    io.to(user.room).emit('message', { user: user.name, text: message });
+    io.to(user.room).emit('message', { user: user.name, text: message, timeStamp: timeStamp });
 
     callback();
   });
