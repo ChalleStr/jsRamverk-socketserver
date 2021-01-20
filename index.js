@@ -10,26 +10,26 @@ const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 /**
  * NEDAN FUNGERAR LOKALT!
  */
-const io = require('socket.io')(server, {
-    cors: {
-        origin: "http://localhost:3000",
-        methods: ["GET", "POST"],
-        credentials: true,
-        allowedHeaders: {"Access-Control-Allow-Origin": "http://localhost:3000"}
-
-    }
-});
+// const io = require('socket.io')(server, {
+//     cors: {
+//         origin: "http://localhost:3000",
+//         methods: ["GET", "POST"],
+//         credentials: true,
+//         allowedHeaders: {"Access-Control-Allow-Origin": "http://localhost:3000"}
+//
+//     }
+// });
 /**
  * Driftsatt läge.
  */
-// const io = require("socket.io")(server, {
-//     cors: {
-//         origin: "https://charlottestrand.me",
-//         methods: ["GET", "POST"],
-//         allowedHeaders: ["Content-Type", "authorization", "Access-Control-Allow-Origin"],
-//         credentials: true
-//     }
-// });
+const io = require("socket.io")(server, {
+    cors: {
+        origin: "https://charlottestrand.me",
+        methods: ["GET", "POST"],
+        allowedHeaders: ["Content-Type", "authorization", "Access-Control-Allow-Origin"],
+        credentials: true
+    }
+});
 
 
 app.get("/", (req, res, next) => {
